@@ -3,7 +3,8 @@ function AnimateSemaphore(base) {
         text:"",convert:"",container:null,
         figure:null,body:null,head:null,legs:null,arms:null,
         leftleg:null,leftarm:null,leftstick:null,leftflag:null,
-        isAnimated:false
+        isAnimated:false,
+        currentPose:"S-S"
     };
     var playingSymbol=Symbol("playing");
     var main=this;
@@ -73,8 +74,28 @@ function AnimateSemaphore(base) {
         var rftag=tag.split('-')[1];
         var lfangles={SE:-45,S:0,SW:45,W:90,NW:135,N:180,NE:225};
         var rfangles={SW:45,S:0,SE:-45,E:-90,NE:-135,N:-180,NW:-225};
-        config.leftarm.css("transform",`rotate(${lfangles[lftag]}deg)`);
-        config.rightarm.css("transform",`rotate(${rfangles[rftag]}deg)`);
+        if(config.currentPose==tag) {
+            var lfone=lfangles[lftag]+10;
+            var lftwo=lfangles[lftag]-10;
+            var lfthree=lfangles[lftag];
+            var rfone=rfangles[rftag]-10;
+            var rftwo=rfangles[rftag]+10;
+            var rfthree=rfangles[rftag];
+            config.leftarm.css("transform",`rotate(${lfone}deg)`);
+            config.rightarm.css("transform",`rotate(${rfone}deg)`);
+            setTimeout(()=>{
+                config.leftarm.css("transform",`rotate(${lftwo}deg)`);
+                config.rightarm.css("transform",`rotate(${rftwo}deg)`);
+                setTimeout(()=>{
+                    config.leftarm.css("transform",`rotate(${lfthree}deg)`);
+                    config.rightarm.css("transform",`rotate(${rfthree}deg)`);
+                },250);
+            },250);
+        } else {
+            config.leftarm.css("transform",`rotate(${lfangles[lftag]}deg)`);
+            config.rightarm.css("transform",`rotate(${rfangles[rftag]}deg)`);
+            config.currentPose=tag;
+        }
     }
     this.showFrame=(index,valid)=>{
         if(config.isAnimated)return;
