@@ -1,0 +1,25 @@
+<script src="jquery.js"></script>
+<script src="main.js"></script>
+<h2>Animated Semaphore</h2>
+<div>This with translate text and numbers into semaphore</div>
+<div>Any unknown characters will be shown as both flags up</div>
+<div id="semaphore"></div>
+Text: <input id="the-input">
+<button id="the-button">Play</button>
+<div id="the-output"></div>
+<script>
+var as=new AnimateSemaphore($("#semaphore"));
+as.init();
+var btn=document.getElementById("the-button");
+var txt=document.getElementById("the-input");
+var out=document.getElementById("the-output");
+btn.addEventListener('click',()=>{
+    if(as.isAnimated()) {
+        out.innerHTML="Animation is already playing";
+    } else {
+        out.innerHTML="";
+        as.setText(txt.value);
+        as.showAnimation();
+    }
+},false);
+</script>
