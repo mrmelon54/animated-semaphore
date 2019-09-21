@@ -13,6 +13,11 @@ as.init();
 var btn=document.getElementById("the-button");
 var txt=document.getElementById("the-input");
 var out=document.getElementById("the-output");
+var wlht=window.location.hash.slice(1,window.location.hash.length);
+if(wlht.length>=1) {
+    as.setText(wlht);
+    as.showAnimation();
+}
 btn.addEventListener('click',()=>{
     if(as.isAnimated()) {
         out.innerHTML="Animation is already playing";
